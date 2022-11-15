@@ -19,12 +19,17 @@ library(dplyr)
 ```{R}
 # Load datasets
 DS <- read.csv("cookie_cats_ABtest.csv")
+nrow(DS)
+ncol(DS)
 summary(DS)
+
 ```
 
 ```{R}
 # Load datasets
 PR <- read.csv("cookie_cats_purch.csv")
+nrow(PR)
+ncol(PR)
 summary(PR)
 
 
