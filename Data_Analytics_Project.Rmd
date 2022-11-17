@@ -34,3 +34,44 @@ summary(PR)
 
 
 ```
+
+# 2. Preprocessing
+## 2.1 Preprocessing dataset "Cookie Cats AB Testing"
+
+```{R}
+unique(DS$version)
+unique(DS$sum_gamerounds)
+unique(DS$retention_1) #Doing this we can search inconsistencies, like there are FALSE " false" and TRUE " true " variables when it should only be FALSE and TRUE
+
+DS$retention_1[DS$retention_1 == "false "] = FALSE #Changing that "false " into FALSE so we have only one FALSE value
+DS$retention_1[DS$retention_1 == "  true "] = TRUE #Changing that " true " into TRUE so we have only one TRUE value
+
+unique(DS$retention_1) #to check if we change the values correctly.
+DS$retention_1 = as.logical(DS$retention_1) #now our values in retention_1 are logical values. Before doing that they where strings.
+unique(DS$retention_1) #to check if we change the values correctly again.
+unique(DS$retention_7) 
+
+```
+
+## 2.2 Preprocessing dataset "Cookie Cats Purchases"
+
+```{R}
+
+#habrá que usar las funciones que nos enseñó el otro día de las cuales no me acuerdo
+
+```
+
+# 3. Descriptive analytics
+## 3.1 Dataset “Cookie Cats AB Testing”
+
+### 3.1.1 Users that downloaded the game
+
+### 3.1.2 Distribution of users in groups
+
+### 3.1.3 Game rounds
+
+### 3.1.4 Retention 
+
+### 3.1.5 Are there non-playing users?
+
+## 3.2 Dataset “Cookie Cats Purchases”
