@@ -56,8 +56,22 @@ unique(DS$retention_7)
 ## 2.2 Preprocessing dataset "Cookie Cats Purchases"
 
 ```{R}
+#Check the data set for inconsistencies on the values
+unique(PR$id)
+unique(PR$purch)
 
-#habrá que usar las funciones que nos enseñó el otro día de las cuales no me acuerdo
+#Change all negatives values to positives values
+PR$purch[PR$purch == "-2.29EUR"] = "2.29EUR"
+PR$purch[PR$purch == "-54.99EUR"] = "54.99EUR"
+PR$purch[PR$purch == "-10.99EUR"] = "10.99EUR"
+PR$purch[PR$purch == "-21.99EUR"] = "21.99EUR"
+
+#Remove all NA values in the dataset
+PR <- na.omit(PR)
+
+#Check again to be sure there are no more inconsistencies
+unique(PR$id)
+unique(PR$purch)
 
 ```
 
@@ -65,8 +79,31 @@ unique(DS$retention_7)
 ## 3.1 Dataset “Cookie Cats AB Testing”
 
 ### 3.1.1 Users that downloaded the game
+```{R}
+totalUserAmmount <- length(DS$userid)
+totalUserAmmount
+```
 
 ### 3.1.2 Distribution of users in groups
+```{R}
+#Check the ammount of users for each group of the A/B test
+g30_UserAmmount <- length(DS$userid[DS$version == "gate_30"])
+g40_UserAmmount <- length(DS$userid[DS$version == "gate_40"])
+
+#Verify that the sum of the ammount of users per group is equal to the totalilty of users
+g30_UserAmmount + g40_UserAmmount == totalUserAmmount
+
+g30_Percentile <- (g30_UserAmmount / totalUserAmmount) * 100
+g30_Percentile
+
+g40_Percentile <- (g40_UserAmmount / totalUserAmmount) * 100
+g40_Percentile
+
+#There's a slightly higher ammount of users in gate40 than in gate30, precisely an 0.87% more
+(g40_Percentile - g30_Percentile) 
+
+
+```
 
 ### 3.1.3 Game rounds
 
