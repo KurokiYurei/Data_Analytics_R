@@ -66,6 +66,7 @@ PR$purch[PR$purch == "-54.99EUR"] = "54.99EUR"
 PR$purch[PR$purch == "-10.99EUR"] = "10.99EUR"
 PR$purch[PR$purch == "-21.99EUR"] = "21.99EUR"
 
+
 #Remove all NA values in the dataset
 PR <- na.omit(PR)
 
@@ -107,8 +108,105 @@ g40_Percentile
 
 ### 3.1.3 Game rounds
 
+What is the distribution of game rounds in the players’ population? 
+
+```{R}
+
+```
+
+And among the users of version A and version B of the game separately?
+
+```{R}
+
+```
+
 ### 3.1.4 Retention 
+
+What is the value of retention at day 1? (percentage of users that are still active the day after installation).
+
+```{R}
+# ---------- RETENTION 1 ----------
+#Percentage of users with version gate_30 that are still active the day after installation (among all players with gate_30)
+g30Ret1 = length(DS$version[DS$version == "gate_30" & DS$retention_1 == TRUE])
+g30Ret1Percentage = (g30Ret1/ g30_UserAmmount) * 100
+g30Ret1Percentage
+
+#Percentage of users with version gate_40 that are still active the day after installation (among all players with gate_40)
+g40Ret1 = length(DS$version[DS$version == "gate_40" & DS$retention_1 == TRUE])
+g40Ret1Percentage = (g40Ret1/ g40_UserAmmount) * 100
+g40Ret1Percentage
+
+#There's a slighlty higher retention_1 of users in gate_30 than in gate_40
+(g30Ret1Percentage - g40Ret1Percentage)
+
+```
+
+What is the value of retention at day 7? (percentage of users that are still active after one week of installation).
+
+```{R}
+# ---------- RETENTION 7 ----------
+#Percentage of users with version gate_30 that are still active after one week of installation (among all players with gate_30)
+g30Ret7 = length(DS$version[DS$version == "gate_30" & DS$retention_7 == TRUE])
+g30Ret7Percentage = (g30Ret7/ g30_UserAmmount) * 100
+g30Ret7Percentage
+
+#Percentage of users with version gate_40 that are still active after one week of installation (among all players with gate_40)
+g40Ret7 = length(DS$version[DS$version == "gate_40" & DS$retention_7 == TRUE])
+g40Ret7Percentage = (g40Ret7/ g40_UserAmmount) * 100
+g40Ret7Percentage
+
+#There's a slighlty higher retention_1 of users in gate_30 than in gate_40
+(g30Ret7Percentage - g40Ret7Percentage)
+
+```
+
 
 ### 3.1.5 Are there non-playing users?
 
+```{R}
+#To know if there are nonplayers, we have to look sum_gamerounds. If they've played  0 rounds, it means they didn't play the game.
+#Searching for non players (sum_gamerounds = 0)
+nonPlayersAmmount = length(DS$sum_gamerounds[DS$sum_gamerounds == 0])
+nonPlayersAmmount
+
+#NonPlayers in percentage
+nonPlayersPercentage = (nonPlayersAmmount / totalUserAmmount) * 100
+nonPlayersPercentage
+
+#Piechart
+names = c("Players", "Non Players")
+variables = c(totalUserAmmount, nonPlayersAmmount)
+
+pie(variables, names)
+```
+
+
 ## 3.2 Dataset “Cookie Cats Purchases”
+
+# 4. Monetization metrics 
+
+```{R}
+#ARPU - Average Revenue Per User 
+#Fixing purch to sum up all the purchases. To do that, we split our string purch to use only the numbers and get rid of EUR.
+purchFixed = strsplit(PR$purch, split = "EUR")
+newPurchFixed = as.vector(unlist(purchFixed))
+newPurchFixed = as.numeric(newPurchFixed)
+
+allPurch = sum(newPurchFixed)
+
+#Now we compute our ARPU
+arpu = allPurch / totalUserAmmount
+arpu
+
+#ARRPU - Average Revenue Per Paying User
+#computing the number of players who pay
+payingUsers = length(unique(PR$id))
+arrpu = allPurch / payingUsers
+arrpu
+
+#Conversion Rate
+conversionRate = payingUsers/totalUserAmmount
+conversionRate
+
+conversionRate * 100
+```
