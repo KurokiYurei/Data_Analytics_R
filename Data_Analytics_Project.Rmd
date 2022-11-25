@@ -61,11 +61,7 @@ unique(PR$id)
 unique(PR$purch)
 
 #Change all negatives values to positives values
-PR$purch[PR$purch == "-2.29EUR"] = "2.29EUR"
-PR$purch[PR$purch == "-54.99EUR"] = "54.99EUR"
-PR$purch[PR$purch == "-10.99EUR"] = "10.99EUR"
-PR$purch[PR$purch == "-21.99EUR"] = "21.99EUR"
-
+PR$purch <- gsub("-", "", PR$purch)
 
 #Remove all NA values in the dataset
 PR <- na.omit(PR)
@@ -103,6 +99,9 @@ g40_Percentile
 #There's a slightly higher ammount of users in gate40 than in gate30, precisely an 0.87% more
 (g40_Percentile - g30_Percentile) 
 
+#We draw a pie chart to see that difference more clearly
+pie(c(g30_UserAmmount, g40_UserAmmount),  c("Gate 30", "Gate 40"))
+
 
 ```
 
@@ -111,12 +110,25 @@ g40_Percentile
 What is the distribution of game rounds in the players’ population? 
 
 ```{R}
+#No se que coi va aqui, he estat provant coses, pero xDD
+y = pnorm(DS$sum_gamerounds, mean(DS$sum_gamerounds), sd(DS$sum_gamerounds))
+
+plot(DS$sum_gamerounds, y)
+
+barplot(DS$sum_gamerounds, y)
+
+hist(DS$sum_gamerounds, y)
+
+
+
 
 ```
 
 And among the users of version A and version B of the game separately?
 
 ```{R}
+#NPI parte 2
+barplot()
 
 ```
 
@@ -210,3 +222,20 @@ conversionRate
 
 conversionRate * 100
 ```
+
+# 5. A/B Testing
+```{R}
+
+
+
+
+
+```
+
+
+## 5.1. Hypothesis
+## 5.2. Visualisation
+
+
+
+
