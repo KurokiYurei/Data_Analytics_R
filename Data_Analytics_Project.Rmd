@@ -117,7 +117,7 @@ plot(DS$sum_gamerounds, y)
 
 barplot(DS$sum_gamerounds, y)
 
-hist(DS$sum_gamerounds, y)
+##hist(DS$sum_gamerounds, y)
 
 
 
@@ -128,7 +128,7 @@ And among the users of version A and version B of the game separately?
 
 ```{R}
 #NPI parte 2
-barplot()
+##barplot()
 
 ```
 
@@ -224,18 +224,31 @@ conversionRate * 100
 ```
 
 # 5. A/B Testing
+
+Research question: Does moving gate to level 40 improve engagement of the users significantly?
 ```{R}
-
-
-
-
 
 ```
 
-
 ## 5.1. Hypothesis
-## 5.2. Visualisation
 
+We'll consider the number of round games of every user. 
+Sample A = round games gate 30
+Sample B = round games gate 40
+
+Null Hypothesis: Sample A >= Sample B
+Hypothesis: Sample B > Sample A
+
+## 5.2. Visualisation
+```{R}
+plot(DS[DS$version == "gate_30",]$sum_gamerounds)
+plot(DS[DS$version == "gate_40",]$sum_gamerounds)
+
+```
+It seems that players in gate 40 plays more game rounds than players in gate 30.
+
+## 5.3. Computation
+## 5.4. Conclusion of A/B testing
 
 
 
