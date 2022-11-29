@@ -232,7 +232,7 @@ Sample A = round games gate 30
 Sample B = round games gate 40
 
 Null Hypothesis: Sample B <= Sample A
-Hypothesis: Sample B > Sample A
+Alternative Hypothesis: Sample B > Sample A
 
 ## 5.2. Visualisation
 ```{R}
@@ -279,11 +279,15 @@ pvalue = pt(obsStat, df, lower.tail = FALSE)
 #critical value (z)
 z = qt(0.05, df, lower.tail = FALSE)
 
-
-
-
 ```
+
 ## 5.4. Conclusion of A/B testing
 
+We can not accept the alternative hypothesis because the observed value (tobs) is smaller than the critical value (z) needed for the acceptance of the alternative hypothesys.
 
+```{R}
+obsStat > z
+```
+
+This is caused because the difference between the game round mean between gate30 and gate40 is very little so we cannot know if moving from one gate to another will engage people. We will need more samples to prove it.
 
