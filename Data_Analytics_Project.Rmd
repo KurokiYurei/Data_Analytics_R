@@ -253,23 +253,33 @@ It seems that players in gate 40 plays more game rounds than players in gate 30.
 meanGameroundsGate30 = mean(DS$sum_gamerounds[DS$version == "gate_30"])
 meanGameroundsGate40 = mean(DS$sum_gamerounds[DS$version == "gate_40"])
 
+#sd
 sdGate30 = sd(DS$sum_gamerounds[DS$version == "gate_30"])
 sdGate40 = sd(DS$sum_gamerounds[DS$version == "gate_40"])
+
+#number of samples
+n1 = length(DS$sum_gamerounds[DS$version == "gate_30"])
+n2 = length(DS$sum_gamerounds[DS$version == "gate_40"])
 
 #Observed statistic
 diffmeans = (meanGameroundsGate30 - meanGameroundsGate40)
 squareRoot = sqrt((sdGate30)^2/n1 + (sdGate40)^2/n2)
 obsStat =  diffmeans/squareRoot 
 
+#degree of freedom (df)
+p1 = ((sdGate30)^2/n1 + (sdGate40)^2/n2)^2
+p2.1 = (((sdGate30)^2/n1)^2) / (n1 - 1)
+p2.2 = (((sdGate40)^2/n2)^2) / (n2 - 1) 
+
+df = p1 / (p2.1 + p2.2)
+
 #pvalue
 
 #critical value (z)
 
-#degree of freedom (df)
-#sd
-#number of samples
-n1 = length(DS$sum_gamerounds[DS$version == "gate_30"])
-n2 = length(DS$sum_gamerounds[DS$version == "gate_40"])
+
+
+
 
 ```
 ## 5.4. Conclusion of A/B testing
