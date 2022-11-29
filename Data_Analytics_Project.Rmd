@@ -51,9 +51,7 @@ DS$retention_1 = as.logical(DS$retention_1) #now our values in retention_1 are l
 unique(DS$retention_1) #to check if we change the values correctly again.
 unique(DS$retention_7) 
 
-DS <- DS[-which.max(DS$sum_gamerounds),] 
-
-
+DS <- DS[-which.max(DS$sum_gamerounds),] #We remove the max sum_gamerounds that is very very high
 
 ```
 
@@ -219,9 +217,7 @@ conversionRate * 100
 # 5. A/B Testing
 
 Research question: Does moving gate to level 40 improve engagement of the users significantly?
-```{R}
 
-```
 
 ## 5.1. Hypothesis
 
