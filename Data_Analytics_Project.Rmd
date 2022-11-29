@@ -51,6 +51,8 @@ DS$retention_1 = as.logical(DS$retention_1) #now our values in retention_1 are l
 unique(DS$retention_1) #to check if we change the values correctly again.
 unique(DS$retention_7) 
 
+
+
 ```
 
 ## 2.2 Preprocessing dataset "Cookie Cats Purchases"
@@ -110,17 +112,15 @@ pie(c(g30_UserAmmount, g40_UserAmmount),  c("Gate 30", "Gate 40"))
 What is the distribution of game rounds in the players’ population? 
 
 ```{R}
-sd(DS$sum_gamerounds)
+boxplot(DS$sum_gamerounds)
 
 ```
 
 And among the users of version A and version B of the game separately?
 
 ```{R}
-#NPI parte 2
-##barplot()
-plot(DS$sum_gamerounds[DS$version == "gate_30"])
-plot(DS$sum_gamerounds[DS$version == "gate_40"])
+boxplot(DS$sum_gamerounds[DS$version == "gate_30"], DS$sum_gamerounds[DS$version == "gate_40"])
+
 ```
 
 ### 3.1.4 Retention 
