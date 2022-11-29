@@ -110,11 +110,7 @@ pie(c(g30_UserAmmount, g40_UserAmmount),  c("Gate 30", "Gate 40"))
 What is the distribution of game rounds in the players’ population? 
 
 ```{R}
-#No se que coi va aqui, he estat provant coses, pero xDD
-plot(DS$sum_gamerounds)
-
-
-
+sd(DS$sum_gamerounds)
 
 ```
 
@@ -265,6 +261,7 @@ n2 = length(DS$sum_gamerounds[DS$version == "gate_40"])
 diffmeans = (meanGameroundsGate40 - meanGameroundsGate30)
 squareRoot = sqrt((sdGate30)^2/n1 + (sdGate40)^2/n2)
 obsStat =  diffmeans/squareRoot 
+obsStat
 
 #degree of freedom (df)
 p1 = ((sdGate30)^2/n1 + (sdGate40)^2/n2)^2
@@ -272,12 +269,15 @@ p2.1 = (((sdGate30)^2/n1)^2) / (n1 - 1)
 p2.2 = (((sdGate40)^2/n2)^2) / (n2 - 1) 
 
 df = p1 / (p2.1 + p2.2)
+df
 
 #pvalue
 pvalue = pt(obsStat, df, lower.tail = FALSE)
+pvalue
 
 #critical value (z)
 z = qt(0.05, df, lower.tail = FALSE)
+z
 
 ```
 
