@@ -111,13 +111,7 @@ What is the distribution of game rounds in the players’ population?
 
 ```{R}
 #No se que coi va aqui, he estat provant coses, pero xDD
-y = pnorm(DS$sum_gamerounds, mean(DS$sum_gamerounds), sd(DS$sum_gamerounds))
-
-plot(DS$sum_gamerounds, y)
-
-barplot(DS$sum_gamerounds, y)
-
-##hist(DS$sum_gamerounds, y)
+plot(DS$sum_gamerounds)
 
 
 
@@ -129,7 +123,8 @@ And among the users of version A and version B of the game separately?
 ```{R}
 #NPI parte 2
 ##barplot()
-
+plot(DS$sum_gamerounds[DS$version == "gate_30"])
+plot(DS$sum_gamerounds[DS$version == "gate_40"])
 ```
 
 ### 3.1.4 Retention 
@@ -248,6 +243,35 @@ plot(DS[DS$version == "gate_40",]$sum_gamerounds)
 It seems that players in gate 40 plays more game rounds than players in gate 30.
 
 ## 5.3. Computation
+
+```{R}
+#Confidence level = 95%
+
+#Significance level = 0.05
+
+#mean
+meanGameroundsGate30 = mean(DS$sum_gamerounds[DS$version == "gate_30"])
+meanGameroundsGate40 = mean(DS$sum_gamerounds[DS$version == "gate_40"])
+
+sdGate30 = sd(DS$sum_gamerounds[DS$version == "gate_30"])
+sdGate40 = sd(DS$sum_gamerounds[DS$version == "gate_40"])
+
+#Observed statistic
+diffmeans = (meanGameroundsGate30 - meanGameroundsGate40)
+squareRoot = sqrt((sdGate30)^2/n1 + (sdGate40)^2/n2)
+obsStat =  diffmeans/squareRoot 
+
+#pvalue
+
+#critical value (z)
+
+#degree of freedom (df)
+#sd
+#number of samples
+n1 = length(DS$sum_gamerounds[DS$version == "gate_30"])
+n2 = length(DS$sum_gamerounds[DS$version == "gate_40"])
+
+```
 ## 5.4. Conclusion of A/B testing
 
 
