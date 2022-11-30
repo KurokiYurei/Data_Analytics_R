@@ -243,7 +243,9 @@ Research question: Does moving gate to level 40 improve engagement of the users 
 
 We'll consider the number of round games of every user. Sample A = round games gate 30 Sample B = round games gate 40
 
-Null Hypothesis: Sample B \<= Sample A Alternative Hypothesis: Sample B \> Sample A
+Null Hypothesis: Sample B \<= Sample A 
+
+Alternative Hypothesis: Sample B \> Sample A
 
 ## - Visualisation
 
