@@ -188,14 +188,29 @@ pie(variables, names)
 
 ## - Dataset "Cookie Cats Purchases"
 
-# - Monetization metrics
-
 ```{R}
-#ARPU - Average Revenue Per User 
 #Fixing purch to sum up all the purchases. To do that, we split our string purch to use only the numbers and get rid of EUR.
 purchFixed = strsplit(PR$purch, split = "EUR")
 newPurchFixed = as.vector(unlist(purchFixed))
 newPurchFixed = as.numeric(newPurchFixed)
+
+barplot(newPurchFixed)
+
+minPurchaseGroup <- newPurchFixed[newPurchFixed <= 30] #the have spent between 0€ and 30€
+medPurchaseGroup <- newPurchFixed[newPurchFixed < 60 & newPurchFixed > 30]#they have spent between 30€ and 60€
+maxPurchaseGroup <- newPurchFixed[newPurchFixed >= 60]#They have spent more than 60€
+
+var = c(length(minPurchaseGroup), length(medPurchaseGroup), length(maxPurchaseGroup))
+levels = c("0€-30€", "30€-60€", "+60€")
+
+pie(var, levels)
+
+```
+
+# - Monetization metrics
+
+```{R}
+#ARPU - Average Revenue Per User 
 
 allPurch = sum(newPurchFixed)
 
