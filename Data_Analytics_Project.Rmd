@@ -188,6 +188,8 @@ pie(variables, names)
 
 ## - Dataset "Cookie Cats Purchases"
 
+We are going to create a piechart that represents in which range of payment we have more users, we have divided it into three ranges. The players that have spent between 0-30€, the ones that have spent between 30-60€ and the ones that have spent more than 60€.
+
 ```{R}
 #Fixing purch to sum up all the purchases. To do that, we split our string purch to use only the numbers and get rid of EUR.
 purchFixed = strsplit(PR$purch, split = "EUR")
@@ -206,6 +208,8 @@ levels = c("0€-30€", "30€-60€", "+60€")
 pie(var, levels)
 
 ```
+
+From the data we can see that the majority of the players spend between 0€ and 30€.
 
 # - Monetization metrics
 
