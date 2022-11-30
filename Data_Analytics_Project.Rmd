@@ -302,7 +302,7 @@ z
 
 ## - Conclusion of A/B testing
 
-We can not accept the alternative hypothesis because the observed value (tobs) is smaller than the critical value (z) needed for the acceptance of the alternative hypothesys.
+We can not accept the alternative hypothesis because the observed value (tobs) is smaller than the critical value (z) needed for the acceptance of the alternative hypothesis.
 
 ```{R}
 obsStat > z
