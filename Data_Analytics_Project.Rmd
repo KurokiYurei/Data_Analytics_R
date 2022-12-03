@@ -309,3 +309,50 @@ obsStat > z
 ```
 
 This is caused because the difference between the game round mean between gate30 and gate40 is very little so we cannot know if moving from one gate to another will engage people. We will need more samples to prove it.
+
+# - Regresion analysis
+
+## - Visual representation
+
+```{R}
+PR_OnlyNums = data.frame(PR$id, as.numeric(gsub("[A-Za-z]" , "", PR$purch)))
+colnames(PR_OnlyNums) = c("id", "purch")
+PR_sumPurch <- aggregate(purch ~ id, PR_OnlyNums, sum)
+PurchasexRound = merge(DS, PR_sumPurch, by.x="userid", by.y="id")
+plot(PurchasexRound$sum_gamerounds, PurchasexRound$purch, main = "Relation between Game rounds and purchases", xlab = "Game rounds", ylab = "Money spent")
+
+```
+
+## - Building the model
+
+```{R}
+mylm = lm(purch ~ sum_gamerounds, PurchasexRound)
+mylm
+plot(PurchasexRound$sum_gamerounds, PurchasexRound$purch, main = "Relation between Game rounds and purchases", xlab = "Game rounds", ylab = "Money spent")
+abline(mylm, col = "Red")
+```
+The regresion line simbolizes the mean change of the dependent variable as the independent variable progresses based on a 0.6983 coeficient per unit.
+
+## - Model fit
+```{R}
+summary(mylm)
+```
+Based on the R-squared value, since it is closer to 1 than 0, more than half of the datapoints fall in the regression line. Therefore this model is moderately accurate, the margin of error is not large enough to declare it as a bad model.
+
+## - Predict a case
+
+```{R}
+invest <- 50
+new.ds <- data.frame( sum_gamerounds=invest )
+predict(mylm, new.ds)
+```
+
+## - Simulation
+
+```{R}
+investSeq <- seq(0, 1000, by=50)
+new.ds2 <- data.frame( sum_gamerounds=investSeq )
+simulation = predict(mylm, new.ds2)
+table(simulation)
+plot(simulation)
+```
