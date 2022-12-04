@@ -401,3 +401,7 @@ Finally, we've also studied the amount of in-app purchases related to the game r
 6.  Óscar and Joel
 7.  Josep, Lidia, Óscar, Joel and Marina
 8.  Josep, Lidia, Óscar, Joel and Marina
+
+# - Non-cheating manifesto
+
+We Lidia Álvarez, Marina Camí, Josep Franqueza, Óscar Paz and Joel Rodríguez assure that we did not cheat in any means or forms during the elaboration of this exercise.
