@@ -102,7 +102,7 @@ g30_Percentile
 g40_Percentile <- (g40_UserAmmount / totalUserAmmount) * 100
 g40_Percentile
 
-#There's a slightly higher ammount of users in gate40 than in gate30, precisely an 0.87% more
+#There's a slightly higher ammount of users in gate40 than in gate30, precisely a 0.88% more
 (g40_Percentile - g30_Percentile) 
 
 #We draw a pie chart to see that difference more clearly
@@ -124,6 +124,10 @@ And among the users of version A and version B of the game separately?
 
 ```{R}
 boxplot(DS$sum_gamerounds[DS$version == "gate_30"], DS$sum_gamerounds[DS$version == "gate_40"], names = c("Gate 30", "Gate 40"))
+
+totalGamerounds = sum(DS$sum_gamerounds)
+gate30Gamerounds = sum(DS$sum_gamerounds[DS$version == "gate_30"])
+gate40Gamerounds = sum(DS$sum_gamerounds[DS$version == "gate_40"])
 
 ```
 
@@ -243,7 +247,7 @@ Research question: Does moving gate to level 40 improve engagement of the users 
 
 We'll consider the number of round games of every user. Sample A = round games gate 30 Sample B = round games gate 40
 
-Null Hypothesis: Sample B \<= Sample A 
+Null Hypothesis: Sample B \<= Sample A
 
 Alternative Hypothesis: Sample B \> Sample A
 
@@ -331,12 +335,15 @@ mylm
 plot(PurchasexRound$sum_gamerounds, PurchasexRound$purch, main = "Relation between Game rounds and purchases", xlab = "Game rounds", ylab = "Money spent")
 abline(mylm, col = "Red")
 ```
+
 The regresion line simbolizes the mean change of the dependent variable as the independent variable progresses based on a 0.6983 coeficient per unit.
 
 ## - Model fit
+
 ```{R}
 summary(mylm)
 ```
+
 Based on the R-squared value, since it is closer to 1 than 0, more than half of the datapoints fall in the regression line. Therefore this model is moderately accurate, the margin of error is not large enough to declare it as a bad model.
 
 ## - Predict a case
@@ -356,3 +363,41 @@ simulation = predict(mylm, new.ds2)
 table(simulation)
 plot(simulation)
 ```
+
+# - Dashboard
+
+# - Conclusion
+
+A total of 90.188 users downloaded the game and it was almost balanced between gate30 (Group A ) and gate40 (Group B), with 44.699 users in group A and 45.489 users in group B.
+
+The distribution of game rounds in the players population was 4.628.471, but we can see that there is a slightly difference between group A and group B, being 2.294.941 the total game rounds played on group A and 2.333.530 in group B.
+
+We've also observed the difference between retention depending on which group players are.\
+RETENTION 1:\
+Gate 30 (Group A) Retention after day 1 = 20.034\
+Gate 30 (Group A) Percentage retention after day 1 = 44,82 %\
+Gate 40 (Group B) Retention after day 1 = 20.119\
+Gate 40 (Group B) Percentage retention after day 1 = 44,23%\
+We can see there's a slightly difference, but is almost the same percentage.\
+RETENTION 7:\
+Gate 30 (Group A) Retention after day 7 = 8.501\
+Gate 30 (Group A) Percentage retention after day 7 = 19,02 %\
+Gate 40 (Group B) Retention after day 7 = 8.279\
+Gate 40 (Group B) Percentage retention after day 7 = 18,2 %\
+Again, we can see there's a slightly difference, bigger than in retention 1, but it's quite similar too.
+
+Something important that we've noticed is that players tend to pay nothing or pay an amount between 0 and 30 EUR, but there is a little amount of players that pay between 30 and 60 EUR and more than 60 EUR. So basically the biggest amount of paying users are Minnows.
+
+We've also tried to know if moving to gate 40 improved the engagement of the users, but we could not reach a clear conclusion. This is caused because the difference between the game round mean between gate30 and gate40 is very little so we cannot know if moving from one gate to another will engage people. We will need more samples to prove it.
+
+Finally, we've also studied the amount of in-app purchases related to the game rounds played. We've observed a tendency: the more game rounds they played, they were eager to pay. Depending on the player the ammout was greater or lesser but they ended up paying in a constant way.
+
+# - Team contribution 
+
+2.  Josep and Marina.
+3.  Josep, Lidia and Marina.
+4.  Marina
+5.  Josep, Lidia and Marina
+6.  Óscar and Joel
+7.  Josep, Lidia, Óscar, Joel and Marina
+8.  Josep, Lidia, Óscar, Joel and Marina
