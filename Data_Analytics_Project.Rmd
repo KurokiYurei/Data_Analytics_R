@@ -8,6 +8,8 @@ output:
     number_sections: true
 ---
 
+Students: Marina Camí, Oscar Paz, Lidia Álvarez, Joel Rodríguez, Josep Franqueza
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 #Importar les llibreries
@@ -16,7 +18,7 @@ library(dplyr)
 
 # - Getting to know the datasets
 
-```{R}
+```{R, include=FALSE}
 # Load datasets
 DS <- read.csv("cookie_cats_ABtest.csv")
 nrow(DS)
@@ -53,6 +55,8 @@ unique(DS$retention_1) #to check if we change the values correctly again.
 unique(DS$retention_7) 
 
 DS <- DS[-which.max(DS$sum_gamerounds),] #We remove the max sum_gamerounds that is very very high
+
+write.csv(DS, "D:/Documents/Disseny i Produccio de Videojocs/4t Curs/1r Trimestre/Analisis de Dades/Practiques/Practica 1/ProcesedDataS.csv", row.names = FALSE)
 
 ```
 
@@ -392,7 +396,7 @@ We've also tried to know if moving to gate 40 improved the engagement of the use
 
 Finally, we've also studied the amount of in-app purchases related to the game rounds played. We've observed a tendency: the more game rounds they played, they were eager to pay. Depending on the player the ammout was greater or lesser but they ended up paying in a constant way.
 
-# - Team contribution 
+# - Team contribution
 
 2.  Josep and Marina.
 3.  Josep, Lidia and Marina.
