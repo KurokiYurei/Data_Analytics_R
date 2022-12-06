@@ -18,7 +18,7 @@ library(dplyr)
 
 # - Getting to know the datasets
 
-```{R, include=FALSE}
+```{R}
 # Load datasets
 DS <- read.csv("cookie_cats_ABtest.csv")
 nrow(DS)
@@ -56,9 +56,9 @@ unique(DS$retention_7)
 
 DS <- DS[-which.max(DS$sum_gamerounds),] #We remove the max sum_gamerounds that is very very high
 
-write.csv(DS, "D:/Documents/Disseny i Produccio de Videojocs/4t Curs/1r Trimestre/Analisis de Dades/Practiques/Practica 1/ProcesedDataS.csv", row.names = FALSE)
-
 ```
+
+We've changed some inconsistencies from DS, like some true and false values that were wrongly introduced. There were TRUE, FALSE, " false" and " true " values. We've changed all into only boolean values (TRUE and FALSE).
 
 ## - Preprocessing dataset "Cookie Cats Purchases"
 
@@ -79,6 +79,9 @@ unique(PR$purch)
 
 ```
 
+We've changed negative values into positive ones by erasing - sign in some values from PR. 
+We've also removed all NA values from PR.
+
 # - Descriptive analytics
 
 ## - Dataset "Cookie Cats AB Testing"
@@ -90,14 +93,16 @@ totalUserAmmount <- length(DS$userid)
 totalUserAmmount
 ```
 
+Here we observed length related to userid value to know how many users downloaded the game. There are actually 90.188 users.
+
 ### - Distribution of users in groups
 
 ```{R}
-#Check the ammount of users for each group of the A/B test
+#Check the amount of users for each group of the A/B test
 g30_UserAmmount <- length(DS$userid[DS$version == "gate_30"])
 g40_UserAmmount <- length(DS$userid[DS$version == "gate_40"])
 
-#Verify that the sum of the ammount of users per group is equal to the totalilty of users
+#Verify that the sum of the amount of users per group is equal to the totalilty of users
 g30_UserAmmount + g40_UserAmmount == totalUserAmmount
 
 g30_Percentile <- (g30_UserAmmount / totalUserAmmount) * 100
@@ -106,7 +111,7 @@ g30_Percentile
 g40_Percentile <- (g40_UserAmmount / totalUserAmmount) * 100
 g40_Percentile
 
-#There's a slightly higher ammount of users in gate40 than in gate30, precisely a 0.88% more
+#There's a slightly higher amount of users in gate40 than in gate30, precisely a 0.88% more
 (g40_Percentile - g30_Percentile) 
 
 #We draw a pie chart to see that difference more clearly
@@ -115,9 +120,20 @@ pie(c(g30_UserAmmount, g40_UserAmmount),  c("Gate 30", "Gate 40"))
 
 ```
 
+We've divided the total amount of player into two groups, gate30 and gate40.
+To do that we've searched all players with version gate_30.
+We've done the same with players with version gate_40.
+
+Gate 30 users: 44.699 users
+Gate 40 users: 45.489 users
+
+To know the percentage we've divided the amount of gate30 users into the totalUserAmount to know exactly how many players with version gate30 were.
+We've done the same with gate40 users.
+
 ### - Game rounds
 
 What is the distribution of game rounds in the players' population?
+We've used a boxplot to visually represent the distribution of game rounds.
 
 ```{R}
 boxplot(DS$sum_gamerounds)
@@ -134,6 +150,7 @@ gate30Gamerounds = sum(DS$sum_gamerounds[DS$version == "gate_30"])
 gate40Gamerounds = sum(DS$sum_gamerounds[DS$version == "gate_40"])
 
 ```
+We've used a boxplot to visually represent the distribution of game rounds by dividing this into gate30 group and gate40 group.
 
 ### - Retention
 
@@ -156,6 +173,15 @@ g40Ret1Percentage
 
 ```
 
+To calculate retention percentage we've done:
+1. Calculate all players in gate30 group and gate40 group that have been retained and are still active he day after installation.
+2. Divide this amount the players among all players in gate30 and multiplied by 100 to know the percentage of Retention1 of gate30 players.
+
+Retention 1 gate30 percentage: 44,82%
+Retention 1 gate40 percentage: 44,23%
+
+We've done the same for gate40 group.
+
 What is the value of retention at day 7? (percentage of users that are still active after one week of installation).
 
 ```{R}
@@ -175,6 +201,10 @@ g40Ret7Percentage
 
 ```
 
+We've done the same for retention 7 like we did with retention 1.
+Retention 7 gate30 percentage: 19,02%
+Retention 7 gate40 percentage: 18,2%
+
 ### - Are there non-playing users?
 
 ```{R}
@@ -193,6 +223,9 @@ variables = c(totalUserAmmount, nonPlayersAmmount)
 
 pie(variables, names)
 ```
+
+We've searched how many players have 0 game rounds, so we can know they are non players.
+We know that there are 3.994 users with no game rounds.
 
 ## - Dataset "Cookie Cats Purchases"
 
@@ -221,6 +254,12 @@ From the data we can see that the majority of the players spend between 0€ and
 
 # - Monetization metrics
 
+To know the ARPU:
+1. We've sum all purchases to know how much did players pay.
+2. We've divided the sum by the amount of total users.
+
+To know the ARRPU:
+We've divided all purchases by the number of PAYING users.
 ```{R}
 #ARPU - Average Revenue Per User 
 
@@ -242,6 +281,7 @@ conversionRate
 
 conversionRate * 100
 ```
+ 
 
 # - A/B Testing
 
@@ -267,29 +307,52 @@ It seems that players in gate 40 plays more game rounds than players in gate 30.
 
 ## - Computation
 
+We've calculated:
+
 ```{R}
 #Confidence level = 95%
 
 #Significance level = 0.05
+```
 
+1. The mean of game rounds of gate30 group and gate40 group.
+```{R}
 #mean
 meanGameroundsGate30 = mean(DS$sum_gamerounds[DS$version == "gate_30"])
+meanGameroundsGate30
 meanGameroundsGate40 = mean(DS$sum_gamerounds[DS$version == "gate_40"])
+meanGameroundsGate40
+```
 
+2. The standard deviaton of the sum of game rounds of gate30 and gate40 group.
+```{R}
 #sd
 sdGate30 = sd(DS$sum_gamerounds[DS$version == "gate_30"])
+sdGate30
 sdGate40 = sd(DS$sum_gamerounds[DS$version == "gate_40"])
+sdGate40
+```
 
+3. The number of samples in each group.
+```{R}
 #number of samples
 n1 = length(DS$sum_gamerounds[DS$version == "gate_30"])
+n1
 n2 = length(DS$sum_gamerounds[DS$version == "gate_40"])
+n2
+```
 
+4. The observed Statistic.
+```{R}
 #Observed statistic
 diffmeans = (meanGameroundsGate40 - meanGameroundsGate30)
 squareRoot = sqrt((sdGate30)^2/n1 + (sdGate40)^2/n2)
 obsStat =  diffmeans/squareRoot 
 obsStat
+```
 
+5. The degree of freedom.
+```{R}
 #degree of freedom (df)
 p1 = ((sdGate30)^2/n1 + (sdGate40)^2/n2)^2
 p2.1 = (((sdGate30)^2/n1)^2) / (n1 - 1)
@@ -297,7 +360,10 @@ p2.2 = (((sdGate40)^2/n2)^2) / (n2 - 1)
 
 df = p1 / (p2.1 + p2.2)
 df
+```
 
+6. pvalue and critical value to know if we can accept the hypothesis or not.
+```{R}
 #pvalue
 pvalue = pt(obsStat, df, lower.tail = FALSE)
 pvalue
